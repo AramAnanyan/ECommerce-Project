@@ -4,7 +4,6 @@
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>ECommerce.Application</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,8 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Queries\" />
+    <Folder Include="Customers\Commands\" />
   </ItemGroup>
 
 </Project>

@@ -24,12 +24,12 @@ namespace ECommerce.Infrastructure.Persistence.Configurations
                    .HasMaxLength(50)
                    .IsRequired();
 
-            builder.Property(c => c.EmailAdress)
+            builder.Property(c => c.EmailAddress)
                    .HasColumnName("email_address")
                    .HasMaxLength(255)
                    .IsRequired();
 
-            builder.HasIndex(c => c.EmailAdress)
+            builder.HasIndex(c => c.EmailAddress)
                    .IsUnique()
                    .HasDatabaseName("uq_aram_customers_email_address");
 

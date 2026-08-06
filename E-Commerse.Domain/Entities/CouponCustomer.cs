@@ -9,5 +9,24 @@
         public bool IsValid { get; set; }
         public Coupon Coupon { get; set; } = null!;
         public Customer Customer { get; set; } = null!;
+
+        public static CouponCustomer Create(int couponId, int customerId, int uses, bool isValid)
+        {
+            return new CouponCustomer
+            {
+                CouponId = couponId,
+                CustomerId = customerId,
+                Uses = uses,
+                IsValid = isValid
+            };
+        }
+
+        public void Update(int couponId, int customerId, int uses, bool isValid)
+        {
+            CouponId = couponId;
+            CustomerId = customerId;
+            Uses = uses;
+            IsValid = isValid;
+        }
     }
 }
