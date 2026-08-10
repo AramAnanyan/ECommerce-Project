@@ -12,9 +12,15 @@
         public ICollection<CouponCustomer> CouponCustomers { get; set; } = new List<CouponCustomer>();
         public ICollection<CouponProduct> CouponProducts { get; set; } = new List<CouponProduct>();
 
-        public static Coupon Create(string code, decimal discountPercentage, int maxUses, DateTime startDate, DateTime endDate)
+        public static Coupon Create(
+        string code,
+        decimal discountPercentage,
+        int maxUses,
+        DateTime startDate,
+        DateTime endDate,
+        List<int>? productIds = null)
         {
-            return new Coupon
+            var coupon = new Coupon
             {
                 Code = code,
                 DiscountPercentage = discountPercentage,
@@ -22,6 +28,19 @@
                 StartDate = startDate,
                 EndDate = endDate
             };
+
+            if (productIds != null && productIds.Any())
+            {
+                foreach (var productId in productIds.Distinct())
+                {
+                    coupon.CouponProducts.Add(new CouponProduct
+                    {
+                        ProductId = productId
+                    });
+                }
+            }
+
+            return coupon;
         }
 
         public void Update(string code, decimal discountPercentage, int maxUses, DateTime startDate, DateTime endDate)

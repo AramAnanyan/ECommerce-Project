@@ -13,14 +13,14 @@
         public ICollection<Order> Orders { get; set; } = new List<Order>();
         public ICollection<CouponCustomer> CouponCustomers { get; set; } = new List<CouponCustomer>();
 
-        public static Customer Create(string fullName, string emailAdress, string phoneNumber, DateTime createdAt)
+        public static Customer Create(string fullName, string emailAdress, string phoneNumber)
         {
             return new Customer
             {
                 FullName = fullName,
                 EmailAddress = emailAdress,
                 PhoneNumber = phoneNumber,
-                CreatedAt = createdAt
+                CreatedAt = DateTime.UtcNow
             };
         }
 

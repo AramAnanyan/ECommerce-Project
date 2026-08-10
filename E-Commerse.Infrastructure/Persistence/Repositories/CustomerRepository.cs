@@ -51,7 +51,7 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
             await _context.Customers.Where(c => c.Id == id).ExecuteDeleteAsync(ct);
         }
 
-        public async Task<CouponCustomer?> GetCustomerCouponAsync(int customerId, string couponCode, CancellationToken cancellationToken = default)
+        public async Task<CouponCustomer> GetCustomerCouponAsync(int customerId, string couponCode, CancellationToken cancellationToken = default)
         {
             return await _context.CouponCustomers
                 .Include(cc => cc.Coupon)

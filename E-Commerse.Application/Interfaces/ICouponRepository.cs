@@ -8,6 +8,7 @@ namespace ECommerce.Application.Interfaces
     public interface ICouponRepository
     {
         Task<Coupon?> GetByIdAsync(int id, CancellationToken ct = default);
+        Task<Coupon> GetByCodeAsync(string code, CancellationToken cancellationToken = default);
 
         Task<PagedResult<Coupon>> GetPagedListAsync(
             int pageNumber,

@@ -14,25 +14,36 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
         {
             _context = context;
         }
-        public async Task<Coupon?> GetByIdAsync(int id, CancellationToken ct = default)
+        public async Task<Coupon> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _context.Coupons.FindAsync(new[] { id }, ct);
+            return await _context.Coupons.AsNoTracking()
+                .Include(x=>x.CouponCustomers)
+                .FirstOrDefaultAsync(x=>x.Id == id, cancellationToken);
 
         }
 
-        public async Task<PagedResult<Coupon>> GetPagedListAsync(
-            int pageNumber,
-            int pageSize,
-            CancellationToken ct = default)
+        public async Task<Coupon> GetByCodeAsync(string code, CancellationToken cancellationToken = default)
         {
-            var query = _context.Coupons.AsNoTracking();
+            return await _context.Coupons.AsNoTracking()
+                .FirstOrDefaultAsync(x=>x.Code == code);
 
-            int totalCount = await query.CountAsync(ct);
+        }
+
+        public async Task<PagedResult<Coupon>> GetPagedListAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+        {
+            var query = _context.Coupons
+                .Include(c => c.CouponProducts)
+                    .ThenInclude(cp => cp.Product)
+                        .ThenInclude(p => p.Category)
+                .AsNoTracking();
+
+            var totalCount = await query.CountAsync(cancellationToken);
 
             var items = await query
+                .OrderByDescending(c => c.StartDate)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
 
             return new PagedResult<Coupon>(items, totalCount, pageNumber, pageSize);
         }

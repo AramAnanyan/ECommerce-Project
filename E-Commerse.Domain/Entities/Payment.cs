@@ -12,8 +12,9 @@
         public Order Order { get; set; } = null!;
         public PaymentMethod PaymentMethod { get; set; } = null!;
         public PaymentStatus Status { get; set; } = null!;
+        
 
-        public static Payment Create(int orderId, decimal amountPaid, int paymentMethodId, int statusId, DateTime createdAt)
+        public static Payment Create(int orderId, decimal amountPaid, int paymentMethodId, int statusId, DateTime? createdAt)
         {
             return new Payment
             {
@@ -21,7 +22,7 @@
                 AmountPaid = amountPaid,
                 PaymentMethodId = paymentMethodId,
                 StatusId = statusId,
-                CreatedAt = createdAt
+                CreatedAt = createdAt ?? DateTime.UtcNow
             };
         }
 

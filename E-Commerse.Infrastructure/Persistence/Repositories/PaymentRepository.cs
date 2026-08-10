@@ -21,9 +21,12 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
             await _context.Payments.Where(c => c.Id == id).ExecuteDeleteAsync(ct);
         }
 
-        public async Task<Payment?> GetByIdAsync(int id, CancellationToken ct = default)
+        public async Task<Payment?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _context.Payments.FindAsync(new[] { id }, ct);
+            return await _context.Payments.AsNoTracking()
+                .Include(p => p.PaymentMethod)
+                .Include(p=>p.Status)
+                .FirstOrDefaultAsync(p=>p.Id == id,cancellationToken);
         }
 
         public async Task<PagedResult<Payment>> GetPagedListAsync(int pageNumber, int pageSize, CancellationToken ct = default)
