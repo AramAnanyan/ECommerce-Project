@@ -1,10 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel;
 
-namespace ECommerce.Domain.Enums
+namespace ECommerce.Domain.Enums;
+
+public enum OrderStatus
 {
-    internal class OrderStatus
-    {
-    }
+    [Description("Pending")]
+    Pending = 1,
+
+    [Description("Completed")]
+    Completed = 2,
+
+    [Description("Cancelled")]
+    Cancelled = 4,
+
+    [Description("Refunded")]
+    Refunded = 5
 }

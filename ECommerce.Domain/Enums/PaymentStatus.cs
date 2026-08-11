@@ -1,10 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel;
 
-namespace ECommerce.Domain.Enums
+namespace ECommerce.Domain.Enums;
+
+public enum PaymentStatus
 {
-    internal class PaymentStatus
-    {
-    }
+    [Description("Pending")]
+    Pending = 1,
+
+    [Description("Paid")]
+    Paid = 2,
+
+    [Description("Refunded")]
+    Refunded = 3,
+
+    [Description("Cancelled")]
+    Cancelled = 4
 }
