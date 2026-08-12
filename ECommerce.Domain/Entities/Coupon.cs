@@ -59,26 +59,78 @@ public class Coupon
         StartDate = startDate;
         EndDate = endDate;
 
-        CouponProducts.Clear();
-
-        foreach (var productId in productIds.Distinct())
+        if (CouponProducts.Count == 0)
         {
-            CouponProducts.Add(new CouponProduct
+            foreach (var productId in productIds)
             {
-                ProductId = productId,
-                CouponId = Id
-            });
+                CouponProducts.Add(new CouponProduct
+                {
+                    ProductId = productId,
+                    CouponId = Id
+                });
+            }
+        }
+        else
+        {
+            var productsToRemove = CouponProducts
+                .Where(cp => !productIds.Contains(cp.ProductId))
+                .ToList();
+
+            foreach (var product in productsToRemove)
+                CouponProducts.Remove(product);
+
+            var existingProductIds = CouponProducts
+                .Select(cp => cp.ProductId)
+                .ToList();
+
+            foreach (var productId in productIds)
+            {
+                if (!existingProductIds.Contains(productId))
+                {
+                    CouponProducts.Add(new CouponProduct
+                    {
+                        ProductId = productId,
+                        CouponId = Id
+                    });
+                }
+            }
         }
 
-        CouponCustomers.Clear();
-
-        foreach (var customerId in customerIds.Distinct())
+        if (CouponCustomers.Count == 0)
         {
-            CouponCustomers.Add(new CouponCustomer
+            foreach (var customerId in customerIds)
             {
-                CustomerId = customerId,
-                CouponId = Id
-            });
+                CouponCustomers.Add(new CouponCustomer
+                {
+                    CustomerId = customerId,
+                    CouponId = Id
+                });
+            }
+        }
+        else
+        {
+            var customersToRemove = CouponCustomers
+                .Where(cc => !customerIds.Contains(cc.CustomerId))
+                .ToList();
+
+            foreach (var customer in customersToRemove)
+                CouponCustomers.Remove(customer);
+
+            var existingCustomerIds = CouponCustomers
+                .Select(cc => cc.CustomerId)
+                .ToList();
+
+            foreach (var customerId in customerIds)
+            {
+                if (!existingCustomerIds.Contains(customerId))
+                {
+                    CouponCustomers.Add(new CouponCustomer
+                    {
+                        CustomerId = customerId,
+                        CouponId = Id
+                    });
+                }
+            }
         }
 
     }
