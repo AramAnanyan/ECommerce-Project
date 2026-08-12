@@ -16,7 +16,7 @@ internal sealed class CreatePaymentCommandHandler : IRequestHandler<CreatePaymen
 
     public async Task Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
     {
-        var payment = Payment.Create(request.orderId,request.amountPaid,request.paymentMethodId,request.statusId,request.createdAt);
+        var payment = Payment.Create(request.OrderId,request.AmountPaid,request.PaymentMethodId,request.StatusId,request.CreatedAt);
 
         await _paymentRepository.InsertAsync(payment, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

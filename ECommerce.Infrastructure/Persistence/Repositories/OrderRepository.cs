@@ -21,6 +21,7 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
             return await _context.Orders
                 .Include(x => x.OrderItems)
                     .ThenInclude(x => x.Product)
+                        .ThenInclude(x=>x.Currency)
                 .Include(x => x.Status)
                 .AsNoTracking() // nayel esi inch a
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);

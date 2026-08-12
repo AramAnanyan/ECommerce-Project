@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int StatusId { get; set; }
+        public Enums.OrderStatus StatusId { get; set; }
         public int CustomerId { get; set; }
         public int AddressId { get; set; }
 
@@ -15,7 +15,7 @@
         public ICollection<Payment> Payments { get; set; } = [];
 
         public static Order Create(
-            int statusId,
+            Enums.OrderStatus statusId,
             int customerId,
             int addressId,
             List<OrderItem> items)
@@ -30,11 +30,11 @@
             };
         }
 
-        public void Update(int statusId, int customerId, int addressId)
+        public void Update(Enums.OrderStatus statusId, int addressId, List<OrderItem> items)
         {
             StatusId = statusId;
-            CustomerId = customerId;
             AddressId = addressId;
+            items = items ?? new List<OrderItem>();
         }
     }
 }

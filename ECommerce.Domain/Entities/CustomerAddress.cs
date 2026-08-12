@@ -3,7 +3,7 @@
     public class CustomerAddress
     {
         public int Id { get; set; }
-        public int CityId { get; set; }
+        public Enums.City CityId { get; set; }
         public int CustomerId { get; set; }
         public string Street { get; set; } = string.Empty;
         public string PostalCode { get; set; } = string.Empty;
@@ -12,7 +12,7 @@
         public Customer Customer { get; set; } = null!;
         public ICollection<Order> Orders { get; set; } = new List<Order>();
 
-        public static CustomerAddress Create(int cityId, int customerId, string street, string postalCode)
+        public static CustomerAddress Create(Enums.City cityId, int customerId, string street, string postalCode)
         {
             return new CustomerAddress
             {
@@ -23,7 +23,7 @@
             };
         }
 
-        public void Update(int cityId, int customerId, string street, string postalCode)
+        public void Update(Enums.City cityId, int customerId, string street, string postalCode)
         {
             CityId = cityId;
             CustomerId = customerId;

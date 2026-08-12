@@ -5,8 +5,8 @@
         public int Id { get; set; }
         public int OrderId { get; set; }
         public decimal AmountPaid { get; set; }
-        public int PaymentMethodId { get; set; }
-        public int StatusId { get; set; }
+        public Enums.PaymentMethod PaymentMethodId { get; set; }
+        public Enums.PaymentStatus StatusId { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public Order Order { get; set; } = null!;
@@ -14,7 +14,7 @@
         public PaymentStatus Status { get; set; } = null!;
         
 
-        public static Payment Create(int orderId, decimal amountPaid, int paymentMethodId, int statusId, DateTime? createdAt)
+        public static Payment Create(int orderId, decimal amountPaid, Enums.PaymentMethod paymentMethodId, Enums.PaymentStatus statusId, DateTime? createdAt)
         {
             return new Payment
             {
@@ -26,7 +26,7 @@
             };
         }
 
-        public void Update(int orderId, decimal amountPaid, int paymentMethodId, int statusId)
+        public void Update(int orderId, decimal amountPaid, Enums.PaymentMethod paymentMethodId, Enums.PaymentStatus statusId)
         {
             OrderId = orderId;
             AmountPaid = amountPaid;

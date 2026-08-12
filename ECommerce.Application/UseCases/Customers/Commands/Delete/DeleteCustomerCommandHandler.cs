@@ -1,5 +1,4 @@
-﻿
-using ECommerce.Application.Interfaces;
+﻿using ECommerce.Application.Interfaces;
 using MediatR;
 
 namespace ECommerce.Application.UseCases.Customers.Commands.Delete;

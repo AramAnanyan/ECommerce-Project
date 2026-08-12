@@ -31,7 +31,10 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
 
         public async Task<PagedResult<Payment>> GetPagedListAsync(int pageNumber, int pageSize, CancellationToken ct = default)
         {
-            var query = _context.Payments.AsNoTracking();
+            var query = _context.Payments
+                .Include(p => p.PaymentMethod)
+                .Include(p=>p.Status)
+                .AsNoTracking();
 
             int totalCount = await query.CountAsync(ct);
 

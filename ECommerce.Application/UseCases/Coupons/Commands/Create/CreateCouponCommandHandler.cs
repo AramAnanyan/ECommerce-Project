@@ -19,7 +19,7 @@ internal sealed class CreateCouponCommandHandler:IRequestHandler<CreateCouponCom
         var existing = await _couponRepository.GetByCodeAsync(request.Code,cancellationToken);
         if (existing == null)
         {
-            var newCoupon = Coupon.Create(request.Code,request.DiscountPercentage,request.MaxUses,request.StartDate,request.EndDate,request.CouponProductIds);
+            var newCoupon = Coupon.Create(request.Code,request.DiscountPercentage,request.MaxUses,request.StartDate,request.EndDate,request.CouponProductIds,request.AccessCustomersIds);
             await _couponRepository.InsertAsync(newCoupon);
             await _unitOfWork.SaveChangesAsync();
         }

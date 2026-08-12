@@ -23,7 +23,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
             CustomerId = order.CustomerId,
             StatusName = order.Status.Name,
             CreatedAt = order.CreatedAt,
-            TotalAmount = order.OrderItems.Sum(x => (x.Price * x.Quantity) - x.Discount),
+            TotalAmount = order.OrderItems.Sum(x => ((x.Price * x.Quantity) - x.Discount)/x.Product.Currency.MainRate),
             Items = order.OrderItems.Select(x => new OrderItemDto
             {
                 ProductId = x.ProductId,
@@ -31,7 +31,8 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
                 Quantity = x.Quantity,
                 Price = x.Price,
                 Discount = x.Discount,
-                TotalPrice = x.Quantity * (x.Price - x.Discount)
+                TotalPrice = x.Quantity * (x.Price - x.Discount)/ x.Product.Currency.MainRate
+
             }).ToList()
         };
     }

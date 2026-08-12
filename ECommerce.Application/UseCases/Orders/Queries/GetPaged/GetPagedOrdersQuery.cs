@@ -4,7 +4,8 @@ using MediatR;
 
 namespace ECommerce.Application.UseCases.Orders.Queries.GetPaged;
 
-public sealed record GetPagedOrdersQuery(
-    int PageNumber = 1,
-    int PageSize = 10
-) : IRequest<PagedResult<OrderDetailsDto>>;
+public sealed record GetPagedOrdersQuery : IRequest<PagedResult<OrderDetailsDto>>
+{
+    public int PageNumber { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
+}

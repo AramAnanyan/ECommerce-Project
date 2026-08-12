@@ -8,12 +8,14 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
 {
     private readonly IOrderRepository _orderRepository;
     private readonly ICustomerRepository _customerRepository;
+    private readonly IProductRepository _productRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateOrderCommandHandler(IOrderRepository orderRepository, ICustomerRepository customerRepository, IUnitOfWork unitOfWork)
+    public CreateOrderCommandHandler(IOrderRepository orderRepository, ICustomerRepository customerRepository,IProductRepository productRepository, IUnitOfWork unitOfWork)
     {
         _customerRepository = customerRepository;
         _orderRepository = orderRepository;
+        _productRepository = productRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -24,13 +26,22 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
         {
             customerCoupon = await _customerRepository.GetCustomerCouponAsync(request.CustomerId, request.CouponCode, cancellationToken);
             if (customerCoupon == null || !customerCoupon.IsValid)
-            {
                 throw new Exception("Coupon is not valid");
-            }
+        }
+        var productIds = request.Items.Select(x => x.ProductId).Distinct();
+
+        var productDict = new Dictionary<int, Product>();
+        foreach (var id in productIds)
+        {
+            var product = await _productRepository.GetByIdAsync(id, cancellationToken);
+            if (product == null)
+                throw new Exception($"Product with id {id} was not found");
+            productDict[id] = product;
         }
 
         var orderItems = request.Items.Select(x =>
         {
+            var product = _productRepository.GetByIdAsync(x.ProductId,cancellationToken);
             if (customerCoupon != null && customerCoupon.Coupon.CouponProducts.Any(cp => cp.ProductId == x.ProductId))
             {
                 customerCoupon.Uses += 1;
@@ -38,15 +49,15 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
                 {
                     ProductId = x.ProductId,
                     Quantity = x.Quantity,
-                    Price = x.Price,
-                    Discount = (x.Price * x.Quantity) * customerCoupon.Coupon.DiscountPercentage / 100
+                    Price = productDict[x.ProductId].Price,
+                    Discount = (productDict[x.ProductId].Price * x.Quantity) * customerCoupon.Coupon.DiscountPercentage / 100
                 };
             }
             return new OrderItem
             {
                 ProductId = x.ProductId,
                 Quantity = x.Quantity,
-                Price = x.Price,
+                Price = productDict[x.ProductId].Price,
                 Discount = 0
             };
         }).ToList();

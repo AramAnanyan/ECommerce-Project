@@ -1,4 +1,5 @@
 ﻿using ECommerce.Domain.Entities;
+using ECommerce.Domain.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,6 +20,24 @@ namespace ECommerce.Infrastructure.Persistence.Configurations
                    .HasColumnName("name")
                    .HasMaxLength(100)
                    .IsRequired();
+
+            builder.HasData(
+                new Country
+                {
+                    Id = (int)Domain.Enums.Country.Germany,
+                    Name = Domain.Enums.Country.Germany.GetDescription()
+                },
+                new Country
+                {
+                    Id = (int)Domain.Enums.Country.Armenia,
+                    Name = Domain.Enums.Country.Armenia.GetDescription()
+                },
+                new Country
+                {
+                    Id = (int)Domain.Enums.Country.UnitedStates,
+                    Name = Domain.Enums.Country.UnitedStates.GetDescription()
+                }
+            );
         }
     }
 }
