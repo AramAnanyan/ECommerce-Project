@@ -15,7 +15,7 @@ internal sealed class DeleteProductCommandHandler : IRequestHandler<DeleteProduc
 
     public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        await _productRepository.DeleteByIdAsync(request.id, cancellationToken);
+        await _productRepository.DeleteByIdAsync(request.Id, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

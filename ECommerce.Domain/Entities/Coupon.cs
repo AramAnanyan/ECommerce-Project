@@ -81,7 +81,7 @@ public class Coupon
 
             var existingProductIds = CouponProducts
                 .Select(cp => cp.ProductId)
-                .ToList();
+                .ToHashSet();
 
             foreach (var productId in productIds)
             {
@@ -118,7 +118,7 @@ public class Coupon
 
             var existingCustomerIds = CouponCustomers
                 .Select(cc => cc.CustomerId)
-                .ToList();
+                .ToHashSet();
 
             foreach (var customerId in customerIds)
             {

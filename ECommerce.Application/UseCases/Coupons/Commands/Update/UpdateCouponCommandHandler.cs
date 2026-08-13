@@ -1,8 +1,5 @@
 ﻿using ECommerce.Application.Interfaces;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ECommerce.Application.UseCases.Coupons.Commands.Update;
 
@@ -19,14 +16,16 @@ internal sealed class UpdateCouponCommandHandler : IRequestHandler<UpdateCouponC
     public async Task Handle(UpdateCouponCommand request, CancellationToken cancellationToken)
     {
         var coupon = await _couponRepository.GetByIdAsync(request.Id, cancellationToken);
+        var distinctProductIds = request.ProductIds.Distinct().ToList();
+        var distinctAccessCustomerIds = request.AccessCustomersIds.Distinct().ToList();
         coupon.Update(
                 request.Code,
                 request.DiscountPercentage,
                 request.MaxUses,
                 request.StartDate,
                 request.EndDate,
-                request.ProductIds,
-                request.AccessCustomersIds
+                distinctProductIds,
+                distinctAccessCustomerIds
             );
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }

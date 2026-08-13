@@ -21,13 +21,14 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
 
     public async Task<int> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        CouponCustomer customerCoupon = null;
+        CouponCustomer? customerCoupon = null;
         if (!string.IsNullOrWhiteSpace(request.CouponCode))
         {
             customerCoupon = await _customerRepository.GetCustomerCouponAsync(request.CustomerId, request.CouponCode, cancellationToken);
             if (customerCoupon == null || !customerCoupon.IsValid)
                 throw new Exception("Coupon is not valid");
         }
+
         var productIds = request.Items.Select(x => x.ProductId).Distinct();
 
         var productDict = new Dictionary<int, Product>();
@@ -36,31 +37,36 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
             var product = await _productRepository.GetByIdAsync(id, cancellationToken);
             if (product == null)
                 throw new Exception($"Product with id {id} was not found");
+
             productDict[id] = product;
         }
 
+        bool couponWasApplied = false;
+
         var orderItems = request.Items.Select(x =>
         {
-            var product = _productRepository.GetByIdAsync(x.ProductId,cancellationToken);
+            var product = productDict[x.ProductId];
+            decimal discount = 0;
+
             if (customerCoupon != null && customerCoupon.Coupon.CouponProducts.Any(cp => cp.ProductId == x.ProductId))
             {
-                customerCoupon.Uses += 1;
-                return new OrderItem
-                {
-                    ProductId = x.ProductId,
-                    Quantity = x.Quantity,
-                    Price = productDict[x.ProductId].Price,
-                    Discount = (productDict[x.ProductId].Price * x.Quantity) * customerCoupon.Coupon.DiscountPercentage / 100
-                };
+                discount = (product.Price * x.Quantity) * customerCoupon.Coupon.DiscountPercentage / 100;
+                couponWasApplied = true;
             }
+
             return new OrderItem
             {
                 ProductId = x.ProductId,
                 Quantity = x.Quantity,
-                Price = productDict[x.ProductId].Price,
-                Discount = 0
+                Price = product.Price,
+                Discount = discount
             };
         }).ToList();
+
+        if (couponWasApplied && customerCoupon != null)
+        {
+            customerCoupon.Uses += 1;
+        }
 
         var order = Order.Create(
             request.StatusId,

@@ -15,7 +15,7 @@ internal sealed class DeleteCustomerCommandHandler : IRequestHandler<DeleteCusto
 
     public async Task Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
     {
-        await _customerRepository.DeleteByIdAsync(request.id, cancellationToken);
+        await _customerRepository.DeleteByIdAsync(request.Id, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
