@@ -40,11 +40,19 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
             return new PagedResult<Review>(items, totalCount, pageNumber, pageSize);
         }
 
-        public Task<IReadOnlyList<Review>> GetReviewsByProductIdAsync(int productId, CancellationToken ct = default)
+        public async Task<IReadOnlyList<Review>> GetReviewsByProductIdAsync(int productId, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await _context.Reviews
+                .AsNoTracking()
+                .Where(x => x.ProductId == productId)
+                .ToListAsync(cancellationToken);
         }
-
+        public async Task<Review?> GetByCustomerAndProductAsync(int customerId, int productId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Reviews
+                .AsNoTracking()
+                .FirstOrDefaultAsync(r => r.CustomerId == customerId && r.ProductId == productId, cancellationToken);
+        }
         public async Task InsertAsync(Review review, CancellationToken ct = default)
         {
             await _context.Reviews.AddAsync(review, ct);

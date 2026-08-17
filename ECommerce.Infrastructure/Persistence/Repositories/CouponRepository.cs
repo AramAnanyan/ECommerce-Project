@@ -1,10 +1,6 @@
 ﻿using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace ECommerce.Infrastructure.Persistence.Repositories
 {
     public class CouponRepository : ICouponRepository
@@ -18,6 +14,10 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
         {
             return await _context.Coupons.AsNoTracking()
                 .Include(x=>x.CouponCustomers)
+                    .ThenInclude(x=>x.Customer)
+                .Include(x=>x.CouponProducts)
+                    .ThenInclude(x=>x.Product)
+                        .ThenInclude(x=>x.Category)
                 .FirstOrDefaultAsync(x=>x.Id == id, cancellationToken);
 
         }
@@ -25,6 +25,11 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
         public async Task<Coupon> GetByCodeAsync(string code, CancellationToken cancellationToken = default)
         {
             return await _context.Coupons.AsNoTracking()
+                .Include(x => x.CouponCustomers)
+                    .ThenInclude(x => x.Customer)
+                .Include(x => x.CouponProducts)
+                    .ThenInclude(x => x.Product)
+                        .ThenInclude(x => x.Category)
                 .FirstOrDefaultAsync(x=>x.Code == code);
 
         }

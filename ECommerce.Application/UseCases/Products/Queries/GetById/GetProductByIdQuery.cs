@@ -3,4 +3,7 @@ using MediatR;
 
 namespace ECommerce.Application.UseCases.Products.Queries.GetById;
 
-public record GetProductByIdQuery(int id) : IRequest<ProductDetailsDto>;
+public record GetProductByIdQuery : IRequest<ProductDetailsDto>
+{
+    public int Id { get; init; }
+}

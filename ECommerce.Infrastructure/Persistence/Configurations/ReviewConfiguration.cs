@@ -46,5 +46,9 @@ public class ReviewConfiguration : IEntityTypeConfiguration<Review>
 
         builder.HasIndex(r => r.ProductId)
            .HasDatabaseName("idx_aram_reviews_product_id");
+
+        builder.HasIndex(r => new { r.CustomerId, r.ProductId })
+               .IsUnique()
+               .HasDatabaseName("uq_customer_product_review");
     }
 }

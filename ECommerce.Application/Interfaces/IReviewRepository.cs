@@ -19,5 +19,6 @@ namespace ECommerce.Application.Interfaces
         Task DeleteByIdAsync(int id, CancellationToken ct);
 
         Task<IReadOnlyList<Review>> GetReviewsByProductIdAsync(int productId, CancellationToken ct = default);
+        Task<Review> GetByCustomerAndProductAsync(int customerId, int productId, CancellationToken cancellationToken = default);
     }
 }

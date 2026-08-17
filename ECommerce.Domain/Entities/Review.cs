@@ -5,13 +5,13 @@
         public int Id { get; set; }
         public int CustomerId { get; set; }
         public int ProductId { get; set; }
-        public byte Rating { get; set; }
+        public int Rating { get; set; }
         public string Comment { get; set; } = string.Empty;
 
         public Customer Customer { get; set; } = null!;
         public Product Product { get; set; } = null!;
 
-        public static Review Create(int customerId, int productId, byte rating, string comment)
+        public static Review Create(int customerId, int productId, int rating, string comment)
         {
             return new Review
             {
@@ -22,10 +22,8 @@
             };
         }
 
-        public void Update(int customerId, int productId, byte rating, string comment)
+        public void Update( int rating, string comment)
         {
-            CustomerId = customerId;
-            ProductId = productId;
             Rating = rating;
             Comment = comment;
         }

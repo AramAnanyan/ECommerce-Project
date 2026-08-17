@@ -2,4 +2,7 @@
 using MediatR;
 namespace ECommerce.Application.UseCases.Customers.Queries.GetById;
 
-public record GetCustomerByIdQuery(int id) : IRequest<CustomerDetailsDto>;
+public record GetCustomerByIdQuery : IRequest<CustomerDetailsDto>
+{
+    public int Id { get; init; }
+}
