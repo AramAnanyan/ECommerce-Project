@@ -16,7 +16,7 @@ internal sealed class AddCustomerAddressCommandHandler : IRequestHandler<AddCust
 
     public async Task Handle(AddCustomerAddressCommand request, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetByIdAsync(request.CustomerId, cancellationToken);
+        var customer = await _customerRepository.GetByIdAsync(request.CustomerId, true, cancellationToken);
 
         if (customer == null)
         {

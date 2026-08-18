@@ -15,12 +15,13 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
 
     public async Task<OrderDetailsDto> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
     {
-        var order = await _orderRepository.GetByIdAsync(request.Id, cancellationToken);
+        var order = await _orderRepository.GetByIdAsync(request.Id,false, cancellationToken);
 
         return new OrderDetailsDto
         {
             Id = order.Id,
             CustomerId = order.CustomerId,
+            AddressId = order.AddressId,
             StatusName = order.Status.Name,
             CreatedAt = order.CreatedAt,
             TotalAmount = order.OrderItems.Sum(x => Math.Round(((x.Price * x.Quantity) - x.Discount) / x.Product.Currency.MainRate, 2)),

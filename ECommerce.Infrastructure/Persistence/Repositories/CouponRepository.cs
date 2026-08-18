@@ -10,15 +10,25 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
         {
             _context = context;
         }
-        public async Task<Coupon> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Coupon> GetByIdAsync(int id, bool isTracking, CancellationToken cancellationToken = default)
         {
-            return await _context.Coupons.AsNoTracking()
-                .Include(x=>x.CouponCustomers)
-                    .ThenInclude(x=>x.Customer)
-                .Include(x=>x.CouponProducts)
-                    .ThenInclude(x=>x.Product)
-                        .ThenInclude(x=>x.Category)
-                .FirstOrDefaultAsync(x=>x.Id == id, cancellationToken);
+            if (isTracking)
+            {
+                return await _context.Coupons.AsNoTracking()
+                    .Include(x => x.CouponCustomers)
+                        .ThenInclude(x => x.Customer)
+                    .Include(x => x.CouponProducts)
+                        .ThenInclude(x => x.Product)
+                            .ThenInclude(x => x.Category)
+                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            }else
+                return await _context.Coupons
+                    .Include(x => x.CouponCustomers)
+                        .ThenInclude(x => x.Customer)
+                    .Include(x => x.CouponProducts)
+                        .ThenInclude(x => x.Product)
+                            .ThenInclude(x => x.Category)
+                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
 
         }
 

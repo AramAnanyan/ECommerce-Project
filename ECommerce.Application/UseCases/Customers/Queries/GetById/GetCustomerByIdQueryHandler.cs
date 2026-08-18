@@ -14,7 +14,7 @@ internal sealed class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerB
     }
     public async Task<CustomerDetailsDto> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetByIdAsync(request.Id, cancellationToken);
+        var customer = await _customerRepository.GetByIdAsync(request.Id,false, cancellationToken);
 
         if (customer == null)
         {

@@ -1,4 +1,5 @@
-﻿using ECommerce.Application.Interfaces;
+﻿using ECommerce.Application.Exceptions;
+using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Entities;
 using MediatR;
 namespace ECommerce.Application.UseCases.Orders.Commands.Update;
@@ -20,7 +21,7 @@ internal class UpdateOrderCommandHandler:IRequestHandler<UpdateOrderCommand>
 
     public async Task Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
     {
-        var order = await _orderRepository.GetByIdAsync(request.Id, cancellationToken);
+        var order = await _orderRepository.GetByIdAsync(request.Id,true, cancellationToken);
         if (order == null)
             throw new Exception("No order found with such id");
 
@@ -29,7 +30,7 @@ internal class UpdateOrderCommandHandler:IRequestHandler<UpdateOrderCommand>
         {
             customerCoupon = await _customerRepository.GetCustomerCouponAsync(order.CustomerId, request.CouponCode, cancellationToken);
             if (customerCoupon == null || !customerCoupon.IsValid)
-                throw new Exception("Coupon is not valid");
+                throw new CustomException("Coupon is not valid");
         }
 
         var productIds = request.Items.Select(x => x.ProductId).Distinct();
@@ -37,7 +38,7 @@ internal class UpdateOrderCommandHandler:IRequestHandler<UpdateOrderCommand>
         var productDict = new Dictionary<int, Product>();
         foreach (var id in productIds)
         {
-            var product = await _productRepository.GetByIdAsync(id, cancellationToken);
+            var product = await _productRepository.GetByIdAsync(id, true,cancellationToken);
             if (product == null)
                 throw new Exception($"Product with id {id} was not found");
             productDict[id] = product;
@@ -45,7 +46,7 @@ internal class UpdateOrderCommandHandler:IRequestHandler<UpdateOrderCommand>
 
         var orderItems = request.Items.Select(x =>
         {
-            var product = _productRepository.GetByIdAsync(x.ProductId, cancellationToken);
+            
             if (customerCoupon != null && customerCoupon.Coupon.CouponProducts.Any(cp => cp.ProductId == x.ProductId))
             {
                 customerCoupon.Uses += 1;

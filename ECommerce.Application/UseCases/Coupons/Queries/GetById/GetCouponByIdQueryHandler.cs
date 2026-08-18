@@ -14,7 +14,7 @@ internal sealed class GetCouponByIdQueryHandler : IRequestHandler<GetCouponByIdQ
 
     public async Task<CouponDto> Handle(GetCouponByIdQuery request, CancellationToken cancellationToken)
     {
-        var coupon = await _couponRepository.GetByIdAsync(request.Id, cancellationToken);
+        var coupon = await _couponRepository.GetByIdAsync(request.Id,false, cancellationToken);
         return new CouponDto
         {
             Id = coupon.Id,

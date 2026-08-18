@@ -15,7 +15,7 @@ internal sealed class UpdateCouponCommandHandler : IRequestHandler<UpdateCouponC
 
     public async Task Handle(UpdateCouponCommand request, CancellationToken cancellationToken)
     {
-        var coupon = await _couponRepository.GetByIdAsync(request.Id, cancellationToken);
+        var coupon = await _couponRepository.GetByIdAsync(request.Id,true, cancellationToken);
         var distinctProductIds = request.ProductIds.Distinct().ToList();
         var distinctAccessCustomerIds = request.AccessCustomersIds.Distinct().ToList();
         coupon.Update(

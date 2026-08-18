@@ -16,7 +16,7 @@ internal sealed class AddCustomerCouponAccessCommandHandler : IRequestHandler<Ad
 
     public async Task Handle(AddCustomerCouponAccessCommand request, CancellationToken cancellationToken)
     {
-        var coupon = await _couponRepository.GetByIdAsync(request.couponId, cancellationToken);
+        var coupon = await _couponRepository.GetByIdAsync(request.couponId, true,cancellationToken);
         if (coupon == null)
         {
             throw new Exception("No coupon with such Id");

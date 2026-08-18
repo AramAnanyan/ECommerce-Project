@@ -30,7 +30,7 @@ public class Order
         };
     }
 
-    public void Update(Enums.OrderStatus statusId, int addressId, List<OrderItem> items)
+    public void Update(Enums.OrderStatus statusId ,int addressId, List<OrderItem> items)
     {
         StatusId = statusId;
         AddressId = addressId;

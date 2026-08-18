@@ -12,19 +12,32 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Customer> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Customer> GetByIdAsync(int id,bool isTracking, CancellationToken cancellationToken = default)
         {
-            return await _context.Customers
-                .Include(x=>x.Addresses)
-                    .ThenInclude(x=>x.City)
-                    .ThenInclude(x=>x.Country)
-                .Include(x=>x.Orders)
-                    .ThenInclude(x=>x.Status)
-                .Include(x=>x.CouponCustomers)
-                    .ThenInclude(x=>x.Coupon)
-                .Include(x=>x.Reviews)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x=>x.Id == id,cancellationToken);
+            if (isTracking)
+            {
+                return await _context.Customers
+                    .Include(x => x.Addresses)
+                        .ThenInclude(x => x.City)
+                        .ThenInclude(x => x.Country)
+                    .Include(x => x.Orders)
+                        .ThenInclude(x => x.Status)
+                    .Include(x => x.CouponCustomers)
+                        .ThenInclude(x => x.Coupon)
+                    .Include(x => x.Reviews)
+                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            }else
+                return await _context.Customers
+                    .Include(x => x.Addresses)
+                        .ThenInclude(x => x.City)
+                        .ThenInclude(x => x.Country)
+                    .Include(x => x.Orders)
+                        .ThenInclude(x => x.Status)
+                    .Include(x => x.CouponCustomers)
+                        .ThenInclude(x => x.Coupon)
+                    .Include(x => x.Reviews)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public async Task<PagedResult<Customer>> GetPagedListAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)

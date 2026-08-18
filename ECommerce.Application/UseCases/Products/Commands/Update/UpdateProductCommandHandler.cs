@@ -15,7 +15,7 @@ internal sealed class UpdateProductCommandHandler : IRequestHandler<UpdateProduc
 
     public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
+        var product = await _productRepository.GetByIdAsync(request.Id,true, cancellationToken);
         product.Update(
                 request.CategoryId,
                 request.CurrencyId,

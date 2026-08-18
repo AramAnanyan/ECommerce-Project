@@ -7,7 +7,7 @@ namespace ECommerce.Application.Interfaces
 {
     public interface IProductRepository
     {
-        Task<Product> GetByIdAsync(int id, CancellationToken ct = default);
+        Task<Product> GetByIdAsync(int id, bool isTracking, CancellationToken ct = default);
 
         Task<PagedResult<Product>> GetPagedListAsync(
             int pageNumber,

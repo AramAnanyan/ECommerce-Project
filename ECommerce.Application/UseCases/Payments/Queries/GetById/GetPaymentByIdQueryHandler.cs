@@ -15,7 +15,7 @@ internal sealed class GetPaymentByIdQueryHandler : IRequestHandler<GetPaymentByI
 
     public async Task<PaymentDto> Handle(GetPaymentByIdQuery request, CancellationToken cancellationToken)
     {
-        var payment = await _paymentRepository.GetByIdAsync(request.Id,cancellationToken);
+        var payment = await _paymentRepository.GetByIdAsync(request.Id,false,cancellationToken);
         return new PaymentDto
         {
             Id = payment.Id,

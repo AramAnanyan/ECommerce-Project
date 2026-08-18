@@ -35,7 +35,7 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
         var productDict = new Dictionary<int, Product>();
         foreach (var id in productIds)
         {
-            var product = await _productRepository.GetByIdAsync(id, cancellationToken);
+            var product = await _productRepository.GetByIdAsync(id, true,cancellationToken);
             if (product == null)
                 throw new CustomException($"Product with id {id} was not found");
 

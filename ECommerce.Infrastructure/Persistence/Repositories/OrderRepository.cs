@@ -16,15 +16,25 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
             await _context.Orders.Where(c => c.Id == id).ExecuteDeleteAsync(ct);
         }
 
-        public async Task<Order> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Order> GetByIdAsync(int id,bool isTracking ,CancellationToken cancellationToken = default)
         {
-            return await _context.Orders
+            if(isTracking)
+            {
+                return await _context.Orders
                 .Include(x => x.OrderItems)
                     .ThenInclude(x => x.Product)
-                        .ThenInclude(x=>x.Currency)
+                        .ThenInclude(x => x.Currency)
                 .Include(x => x.Status)
-                .AsNoTracking() // nayel esi inch a
                 .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            } else
+                return await _context.Orders
+                .Include(x => x.OrderItems)
+                    .ThenInclude(x => x.Product)
+                        .ThenInclude(x => x.Currency)
+                .Include(x => x.Status)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
         }
 
         public async Task<PagedResult<Order>> GetPagedListAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
@@ -34,7 +44,6 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
                     .ThenInclude(x => x.Product)
                         .ThenInclude(x => x.Currency)
                 .Include(x => x.Status)
-                .AsNoTracking() // nayel esi inch a
                 .AsNoTracking();
 
             int totalCount = await query.CountAsync(cancellationToken);

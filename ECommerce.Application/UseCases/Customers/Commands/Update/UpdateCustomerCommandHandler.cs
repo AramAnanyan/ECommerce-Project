@@ -15,7 +15,7 @@ internal sealed class UpdateCustomerCommandHandler : IRequestHandler<UpdateCusto
 
     public async Task Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetByIdAsync(request.Id, cancellationToken);
+        var customer = await _customerRepository.GetByIdAsync(request.Id,true, cancellationToken);
         if (customer == null)
         {
             throw new Exception("wrong id");

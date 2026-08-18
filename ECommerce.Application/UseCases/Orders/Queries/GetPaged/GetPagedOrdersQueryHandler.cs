@@ -19,6 +19,7 @@ internal sealed class GetPagedOrdersQueryHandler : IRequestHandler<GetPagedOrder
         {
             Id = order.Id,
             CustomerId = order.CustomerId,
+            AddressId = order.AddressId,
             StatusName = order.Status.Name,
             CreatedAt = order.CreatedAt,
             TotalAmount = order.OrderItems.Sum(x => Math.Round(((x.Price * x.Quantity) - x.Discount) / x.Product.Currency.MainRate,2)),

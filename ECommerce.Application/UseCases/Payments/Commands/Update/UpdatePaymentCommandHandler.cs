@@ -15,7 +15,7 @@ internal sealed class UpdatePaymentCommandHandler : IRequestHandler<UpdatePaymen
 
     public async Task Handle(UpdatePaymentCommand request, CancellationToken cancellationToken)
     {
-        var payment = await _paymentRepository.GetByIdAsync(request.Id,cancellationToken);
+        var payment = await _paymentRepository.GetByIdAsync(request.Id,true,cancellationToken);
         payment.Update(
                 request.OrderId,
                 request.AmountPaid,

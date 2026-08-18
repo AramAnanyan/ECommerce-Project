@@ -7,7 +7,7 @@ namespace ECommerce.Application.Interfaces
 {
     public interface ICustomerRepository
     {
-        Task<Customer> GetByIdAsync(int id, CancellationToken ct = default);
+        Task<Customer> GetByIdAsync(int id, bool isTracking, CancellationToken ct = default);
 
         Task<PagedResult<Customer>> GetPagedListAsync(
             int pageNumber,

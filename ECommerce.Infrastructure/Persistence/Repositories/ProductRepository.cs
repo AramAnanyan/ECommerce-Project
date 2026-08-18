@@ -18,18 +18,32 @@ public class ProductRepository : IProductRepository
         await _context.Products.Where(c => c.Id == id).ExecuteDeleteAsync(ct);
     }
 
-    public async Task<Product> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<Product> GetByIdAsync(int id,bool isTracking, CancellationToken cancellationToken = default)
     {
-        return await _context.Products
-            //.AsNoTracking()
-            .Include(x=>x.Category)
-                .ThenInclude(x=>x.ParentCategory)
-            .Include(x=>x.Currency)
-            .Include(x=>x.CountryAccesses)
-                .ThenInclude(x=>x.Country)
-            .Include(x=>x.Reviews)
-                .ThenInclude(x=>x.Customer)
-            .FirstOrDefaultAsync(c => c.Id == id,cancellationToken);
+        if (isTracking)
+        {
+            return await _context.Products
+            .Include(x => x.Category)
+                .ThenInclude(x => x.ParentCategory)
+            .Include(x => x.Currency)
+            .Include(x => x.CountryAccesses)
+                .ThenInclude(x => x.Country)
+            .Include(x => x.Reviews)
+                .ThenInclude(x => x.Customer)
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+        }
+        else
+            return await _context.Products
+            .Include(x => x.Category)
+                .ThenInclude(x => x.ParentCategory)
+            .Include(x => x.Currency)
+            .Include(x => x.CountryAccesses)
+                .ThenInclude(x => x.Country)
+            .Include(x => x.Reviews)
+                .ThenInclude(x => x.Customer)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+
     }
 
     public async Task<PagedResult<Product>> GetPagedListAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
