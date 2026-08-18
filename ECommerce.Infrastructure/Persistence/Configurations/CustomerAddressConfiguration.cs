@@ -38,7 +38,9 @@ namespace ECommerce.Infrastructure.Persistence.Configurations
                 .WithMany(c => c.CustomerAddresses)
                 .HasForeignKey(ca => ca.CityId)
                 .HasConstraintName("fk_aram_customer_addresses_city")
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
+
+
 
             builder.HasIndex(ca => ca.CustomerId)
                 .HasDatabaseName("ix_aram_customer_addresses_customer_id");

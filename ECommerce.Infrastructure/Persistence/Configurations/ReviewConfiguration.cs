@@ -31,6 +31,9 @@ public class ReviewConfiguration : IEntityTypeConfiguration<Review>
            .HasColumnName("rating")
            .IsRequired();
 
+        builder.Property(r => r.Comment)
+           .HasColumnName("comment");
+
         builder.HasOne(r => r.Customer)
            .WithMany(c => c.Reviews)
            .HasForeignKey(r => r.CustomerId)

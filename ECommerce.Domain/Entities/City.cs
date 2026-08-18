@@ -2,7 +2,7 @@
 {
     public class City
     {
-        public int Id { get; set; }
+        public Enums.City Id { get; set; }
         public Enums.Country CountryId { get; set; }
         public string Name { get; set; } = string.Empty;
         public Country Country { get; set; } = null!;

@@ -32,7 +32,7 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
             var query = _context.Customers
                 .Include(x => x.Addresses)
                     .ThenInclude(x => x.City)
-                    .ThenInclude(x => x.Country)
+                        .ThenInclude(x => x.Country)
                 .Include(x => x.Orders)
                     .ThenInclude(x => x.Status)
                 .Include(x => x.CouponCustomers)

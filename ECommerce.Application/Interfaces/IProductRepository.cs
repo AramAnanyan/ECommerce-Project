@@ -7,7 +7,7 @@ namespace ECommerce.Application.Interfaces
 {
     public interface IProductRepository
     {
-        Task<Product?> GetByIdAsync(int id, CancellationToken ct = default);
+        Task<Product> GetByIdAsync(int id, CancellationToken ct = default);
 
         Task<PagedResult<Product>> GetPagedListAsync(
             int pageNumber,
@@ -19,6 +19,6 @@ namespace ECommerce.Application.Interfaces
         Task DeleteByIdAsync(int id, CancellationToken ct);
 
         Task<IReadOnlyList<Product>> GetProductsByCategoryIdAsync(int categoryId, CancellationToken ct = default);
-        Task<Product?> GetWithCategoryAndReviewsAsync(int id, CancellationToken ct = default);
+        Task<Product> GetWithCategoryAndReviewsAsync(int id, CancellationToken ct = default);
     }
 }

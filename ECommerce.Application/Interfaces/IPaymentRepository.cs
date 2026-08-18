@@ -7,7 +7,7 @@ namespace ECommerce.Application.Interfaces
 {
     public interface IPaymentRepository
     {
-        Task<Payment?> GetByIdAsync(int id, CancellationToken ct = default);
+        Task<Payment> GetByIdAsync(int id, CancellationToken ct = default);
 
         Task<PagedResult<Payment>> GetPagedListAsync(
             int pageNumber,

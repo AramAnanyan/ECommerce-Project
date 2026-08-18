@@ -23,13 +23,13 @@ internal sealed class GetPagedProductsQueryHandler : IRequestHandler<GetPagedPro
             Price = product.Price,
             Quantity = product.Quantity,
             Category = product.Category.Name,
-            ParentCategory = product.Category.ParentCategory.Name,
+            ParentCategory = product.Category.ParentCategory?.Name,
             Currency = product.Currency.Name,
             AccessCountries = product.CountryAccesses.Select(x => x.Country.Name).ToList(),
             Reviews = product.Reviews.Select(x => new ProductReviewDto
             {
                 CustomerFullName = x.Customer.FullName,
-                ProductName = x.Product.Name,
+                ProductName = product.Name,
                 Rating = x.Rating,
                 Comment = x.Comment
             }).ToList()

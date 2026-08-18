@@ -28,7 +28,7 @@ public class OrdersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PagedResult<OrderDetailsDto>>> GetPaged(GetPagedOrdersQuery query)
+    public async Task<ActionResult<PagedResult<OrderDetailsDto>>> GetPaged([FromQuery] GetPagedOrdersQuery query)
     {
         var orders = await _sender.Send(query);
         return Ok(orders);

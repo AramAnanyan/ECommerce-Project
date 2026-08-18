@@ -13,7 +13,7 @@ internal class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery,
     }
     public async Task<ProductDetailsDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetByIdAsync(request.id, cancellationToken);
+        var product = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
 
         return new ProductDetailsDto
         {

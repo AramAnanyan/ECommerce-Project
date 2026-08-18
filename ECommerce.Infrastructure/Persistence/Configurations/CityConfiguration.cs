@@ -1,18 +1,19 @@
 ﻿using ECommerce.Domain.Entities;
+using ECommerce.Domain.Enums;
 using ECommerce.Domain.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ECommerce.Infrastructure.Persistence.Configurations
 {
-    public class CityConfiguration : IEntityTypeConfiguration<City>
+    public class CityConfiguration : IEntityTypeConfiguration<Domain.Entities.City>
     {
-        public void Configure(EntityTypeBuilder<City> builder)
+        public void Configure(EntityTypeBuilder<Domain.Entities.City> builder)
         {
             builder.ToTable("aram_cities");
 
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Id).HasColumnName("id");
+            builder.Property(c => c.Id).HasColumnName("id").ValueGeneratedNever();
 
             builder.Property(c => c.Name)
                    .HasColumnName("name")
@@ -33,77 +34,77 @@ namespace ECommerce.Infrastructure.Persistence.Configurations
                .HasDatabaseName("ix_aram_cities_country");
 
             builder.HasData(
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.Yerevan,
+                    Id = Domain.Enums.City.Yerevan,
                     Name = Domain.Enums.City.Yerevan.GetDescription(),
-                    CountryId = 1
+                    CountryId = Domain.Enums.Country.Armenia
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.Gyumri,
+                    Id = Domain.Enums.City.Gyumri,
                     Name = Domain.Enums.City.Gyumri.GetDescription(),
-                    CountryId = 1
+                    CountryId = Domain.Enums.Country.Armenia
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.NewYork,
+                    Id = Domain.Enums.City.NewYork,
                     Name = Domain.Enums.City.NewYork.GetDescription(),
-                    CountryId = 2
+                    CountryId = Domain.Enums.Country.UnitedStates
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.Berlin,
+                    Id = Domain.Enums.City.Berlin,
                     Name = Domain.Enums.City.Berlin.GetDescription(),
-                    CountryId = 3
+                    CountryId = Domain.Enums.Country.Germany
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.WestJamesmouth,
+                    Id = Domain.Enums.City.WestJamesmouth,
                     Name = Domain.Enums.City.WestJamesmouth.GetDescription(),
-                    CountryId = 1
+                    CountryId = Domain.Enums.Country.Armenia
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.Bergerton,
+                    Id = Domain.Enums.City.Bergerton,
                     Name = Domain.Enums.City.Bergerton.GetDescription(),
-                    CountryId = 2
+                    CountryId = Domain.Enums.Country.UnitedStates
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.SouthJuliemouth,
+                    Id = Domain.Enums.City.SouthJuliemouth,
                     Name = Domain.Enums.City.SouthJuliemouth.GetDescription(),
-                    CountryId = 2
+                    CountryId = Domain.Enums.Country.UnitedStates
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.NorthDonaldhaven,
+                    Id = Domain.Enums.City.NorthDonaldhaven,
                     Name = Domain.Enums.City.NorthDonaldhaven.GetDescription(),
-                    CountryId = 1
+                    CountryId = Domain.Enums.Country.Armenia
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.NorthTina,
+                    Id = Domain.Enums.City.NorthTina,
                     Name = Domain.Enums.City.NorthTina.GetDescription(),
-                    CountryId = 2
+                    CountryId = Domain.Enums.Country.UnitedStates
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.WestKrystal,
+                    Id = Domain.Enums.City.WestKrystal,
                     Name = Domain.Enums.City.WestKrystal.GetDescription(),
-                    CountryId = 3
+                    CountryId = Domain.Enums.Country.Germany
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.Andersonhaven,
+                    Id = Domain.Enums.City.Andersonhaven,
                     Name = Domain.Enums.City.Andersonhaven.GetDescription(),
-                    CountryId = 2
+                    CountryId = Domain.Enums.Country.UnitedStates
                 },
-                new City
+                new Domain.Entities.City
                 {
-                    Id = (int)Domain.Enums.City.Ernestshire,
+                    Id = Domain.Enums.City.Ernestshire,
                     Name = Domain.Enums.City.Ernestshire.GetDescription(),
-                    CountryId = 2
+                    CountryId = Domain.Enums.Country.UnitedStates
                 }
             );
         }

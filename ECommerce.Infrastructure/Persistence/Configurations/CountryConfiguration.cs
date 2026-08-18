@@ -24,17 +24,17 @@ namespace ECommerce.Infrastructure.Persistence.Configurations
             builder.HasData(
                 new Country
                 {
-                    Id = (int)Domain.Enums.Country.Germany,
+                    Id = Domain.Enums.Country.Germany,
                     Name = Domain.Enums.Country.Germany.GetDescription()
                 },
                 new Country
                 {
-                    Id = (int)Domain.Enums.Country.Armenia,
+                    Id = Domain.Enums.Country.Armenia,
                     Name = Domain.Enums.Country.Armenia.GetDescription()
                 },
                 new Country
                 {
-                    Id = (int)Domain.Enums.Country.UnitedStates,
+                    Id = Domain.Enums.Country.UnitedStates,
                     Name = Domain.Enums.Country.UnitedStates.GetDescription()
                 }
             );

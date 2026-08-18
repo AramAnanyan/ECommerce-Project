@@ -34,7 +34,6 @@ public class Order
     {
         StatusId = statusId;
         AddressId = addressId;
-        OrderItems = items;
 
         var productIds = items.Select(i => i.ProductId).ToHashSet();
         var itemsToRemove = OrderItems.Where(i => !productIds.Contains(i.ProductId)).ToList();

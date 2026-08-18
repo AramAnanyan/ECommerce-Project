@@ -32,7 +32,9 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
             var query = _context.Orders
                 .Include(x => x.OrderItems)
                     .ThenInclude(x => x.Product)
+                        .ThenInclude(x => x.Currency)
                 .Include(x => x.Status)
+                .AsNoTracking() // nayel esi inch a
                 .AsNoTracking();
 
             int totalCount = await query.CountAsync(cancellationToken);

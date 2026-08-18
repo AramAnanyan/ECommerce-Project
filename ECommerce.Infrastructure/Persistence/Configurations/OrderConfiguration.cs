@@ -22,6 +22,7 @@ namespace ECommerce.Infrastructure.Persistence.Configurations
 
             builder.Property(x => x.StatusId)
                 .HasColumnName("status")
+                .HasConversion<int>()
                 .IsRequired();
 
             builder.Property(x => x.CustomerId)
@@ -45,7 +46,7 @@ namespace ECommerce.Infrastructure.Persistence.Configurations
                 .HasConstraintName("fk_customer");
 
             builder.HasOne(x => x.Address)
-                .WithMany()
+                .WithMany(ca => ca.Orders)
                 .HasForeignKey(x => x.AddressId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("aram_order_address_fkey");

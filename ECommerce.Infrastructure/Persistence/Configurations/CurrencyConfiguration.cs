@@ -31,21 +31,21 @@ namespace ECommerce.Infrastructure.Persistence.Configurations
             builder.HasData(
                 new Currency
                 {
-                    Id = (int)Domain.Enums.Currency.AMD,
+                    Id = Domain.Enums.Currency.AMD,
                     Name = Domain.Enums.Currency.AMD.GetDescription(),
                     MainRate = 388.50M,
                     IsMain = false
                 },
                 new Currency
                 {
-                    Id = (int)Domain.Enums.Currency.USD,
+                    Id = Domain.Enums.Currency.USD,
                     Name = Domain.Enums.Currency.USD.GetDescription(),
                     MainRate = 1M,
                     IsMain = true
                 },
                 new Currency
                 {
-                    Id = (int)Domain.Enums.Currency.EUR,
+                    Id = Domain.Enums.Currency.EUR,
                     Name = Domain.Enums.Currency.EUR.GetDescription(),
                     MainRate = 0.92M,
                     IsMain = false

@@ -17,6 +17,6 @@ namespace ECommerce.Application.Interfaces
         Task InsertAsync(Order order, CancellationToken ct = default);
 
         Task DeleteByIdAsync(int id, CancellationToken ct);
-        Task<Order?> GetWithDetailsAsync(int id, CancellationToken ct = default);
+        Task<Order> GetWithDetailsAsync(int id, CancellationToken ct = default);
     }
 }

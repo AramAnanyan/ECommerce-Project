@@ -25,8 +25,8 @@ public class PaymentMethodConfiguration : IEntityTypeConfiguration<PaymentMethod
             .IsUnique()
             .HasDatabaseName("uq_aram_payment_method");
 
-        builder.HasData(new PaymentMethod { Id = (int)Domain.Enums.PaymentMethod.PayPal, Name = Domain.Enums.PaymentMethod.PayPal.GetDescription() },
-                        new PaymentMethod { Id = (int)Domain.Enums.PaymentMethod.Idram, Name = Domain.Enums.PaymentMethod.Idram.GetDescription() },
-                        new PaymentMethod { Id = (int)Domain.Enums.PaymentMethod.CreditCard, Name = Domain.Enums.PaymentMethod.CreditCard.GetDescription() });
+        builder.HasData(new PaymentMethod { Id = Domain.Enums.PaymentMethod.PayPal, Name = Domain.Enums.PaymentMethod.PayPal.GetDescription() },
+                        new PaymentMethod { Id = Domain.Enums.PaymentMethod.Idram, Name = Domain.Enums.PaymentMethod.Idram.GetDescription() },
+                        new PaymentMethod { Id = Domain.Enums.PaymentMethod.CreditCard, Name = Domain.Enums.PaymentMethod.CreditCard.GetDescription() });
     }
 }

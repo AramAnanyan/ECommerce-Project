@@ -7,7 +7,7 @@ namespace ECommerce.Application.Interfaces
 {
     public interface ICouponRepository
     {
-        Task<Coupon?> GetByIdAsync(int id, CancellationToken ct = default);
+        Task<Coupon> GetByIdAsync(int id, CancellationToken ct = default);
         Task<Coupon> GetByCodeAsync(string code, CancellationToken cancellationToken = default);
 
         Task<PagedResult<Coupon>> GetPagedListAsync(
@@ -19,6 +19,6 @@ namespace ECommerce.Application.Interfaces
 
         Task DeleteByIdAsync(int id, CancellationToken ct);
 
-        Task<Coupon?> GetValidCouponsAsync(CancellationToken ct = default);
+        Task<Coupon> GetValidCouponsAsync(CancellationToken ct = default);
     }
 }

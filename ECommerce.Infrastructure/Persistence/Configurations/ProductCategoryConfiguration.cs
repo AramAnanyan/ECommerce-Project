@@ -38,123 +38,123 @@ public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCate
         builder.HasData(
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Electronics,
+                Id = Domain.Enums.ProductCategory.Electronics,
                 Name = Domain.Enums.ProductCategory.Electronics.GetDescription(),
                 ParentCategoryId = null
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Fashion,
+                Id = Domain.Enums.ProductCategory.Fashion,
                 Name = Domain.Enums.ProductCategory.Fashion.GetDescription(),
                 ParentCategoryId = null
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Home,
+                Id = Domain.Enums.ProductCategory.Home,
                 Name = Domain.Enums.ProductCategory.Home.GetDescription(),
                 ParentCategoryId = null
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Toys,
+                Id = Domain.Enums.ProductCategory.Toys,
                 Name = Domain.Enums.ProductCategory.Toys.GetDescription(),
                 ParentCategoryId = null
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Sport,
+                Id = Domain.Enums.ProductCategory.Sport,
                 Name = Domain.Enums.ProductCategory.Sport.GetDescription(),
                 ParentCategoryId = null
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Laptops,
+                Id = Domain.Enums.ProductCategory.Laptops,
                 Name = Domain.Enums.ProductCategory.Laptops.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Electronics
+                ParentCategoryId = Domain.Enums.ProductCategory.Electronics
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Audio,
+                Id = Domain.Enums.ProductCategory.Audio,
                 Name = Domain.Enums.ProductCategory.Audio.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Electronics
+                ParentCategoryId = Domain.Enums.ProductCategory.Electronics
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Accessories,
+                Id = Domain.Enums.ProductCategory.Accessories,
                 Name = Domain.Enums.ProductCategory.Accessories.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Electronics
+                ParentCategoryId = Domain.Enums.ProductCategory.Electronics
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Furniture,
+                Id = Domain.Enums.ProductCategory.Furniture,
                 Name = Domain.Enums.ProductCategory.Furniture.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Fashion
+                ParentCategoryId = Domain.Enums.ProductCategory.Fashion
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.BoardGames,
+                Id = Domain.Enums.ProductCategory.BoardGames,
                 Name = Domain.Enums.ProductCategory.BoardGames.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Fashion
+                ParentCategoryId = Domain.Enums.ProductCategory.Fashion
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Footwear,
+                Id = Domain.Enums.ProductCategory.Footwear,
                 Name = Domain.Enums.ProductCategory.Footwear.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Fashion
+                ParentCategoryId = Domain.Enums.ProductCategory.Fashion
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.ActionFigures,
+                Id = Domain.Enums.ProductCategory.ActionFigures,
                 Name = Domain.Enums.ProductCategory.ActionFigures.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Home
+                ParentCategoryId = Domain.Enums.ProductCategory.Home
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Gym,
+                Id = Domain.Enums.ProductCategory.Gym,
                 Name = Domain.Enums.ProductCategory.Gym.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Home
+                ParentCategoryId = Domain.Enums.ProductCategory.Home
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.CampingGear,
+                Id = Domain.Enums.ProductCategory.CampingGear,
                 Name = Domain.Enums.ProductCategory.CampingGear.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Home
+                ParentCategoryId = Domain.Enums.ProductCategory.Home
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Bicycles,
+                Id = Domain.Enums.ProductCategory.Bicycles,
                 Name = Domain.Enums.ProductCategory.Bicycles.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Toys
+                ParentCategoryId = Domain.Enums.ProductCategory.Toys
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Cookware,
+                Id = Domain.Enums.ProductCategory.Cookware,
                 Name = Domain.Enums.ProductCategory.Cookware.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Sport
+                ParentCategoryId = Domain.Enums.ProductCategory.Sport
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Appliances,
+                Id = Domain.Enums.ProductCategory.Appliances,
                 Name = Domain.Enums.ProductCategory.Appliances.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Sport
+                ParentCategoryId = Domain.Enums.ProductCategory.Sport
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Crafts,
+                Id = Domain.Enums.ProductCategory.Crafts,
                 Name = Domain.Enums.ProductCategory.Crafts.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Sport
+                ParentCategoryId = Domain.Enums.ProductCategory.Sport
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.Clothing,
+                Id =   Domain.Enums.ProductCategory.Clothing,
                 Name = Domain.Enums.ProductCategory.Clothing.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Sport
+                ParentCategoryId = Domain.Enums.ProductCategory.Sport
             },
             new ProductCategory
             {
-                Id = (int)Domain.Enums.ProductCategory.AthleticWear,
+                Id = Domain.Enums.ProductCategory.AthleticWear,
                 Name = Domain.Enums.ProductCategory.AthleticWear.GetDescription(),
-                ParentCategoryId = (int)Domain.Enums.ProductCategory.Sport
+                ParentCategoryId = Domain.Enums.ProductCategory.Sport
             }
         );
     }

@@ -7,7 +7,7 @@ namespace ECommerce.Application.Interfaces
 {
     public interface IReviewRepository
     {
-        Task<Review?> GetByIdAsync(int id, CancellationToken ct = default);
+        Task<Review> GetByIdAsync(int id, CancellationToken ct = default);
 
         Task<PagedResult<Review>> GetPagedListAsync(
             int pageNumber,

@@ -13,9 +13,8 @@ public class OrderStatusConfiguration : IEntityTypeConfiguration<OrderStatus>
 
         builder.HasKey(os => os.Id);
 
-        builder.Property(os => os.Id)
-            .HasColumnName("id")
-            .UseIdentityAlwaysColumn();
+        builder.Property(x => x.Id)
+            .HasColumnName("id");
 
         builder.Property(os => os.Name)
             .HasColumnName("name")
@@ -26,9 +25,9 @@ public class OrderStatusConfiguration : IEntityTypeConfiguration<OrderStatus>
             .IsUnique()
             .HasDatabaseName("uq_st_name");
 
-        builder.HasData(new OrderStatus { Id = (int)Domain.Enums.OrderStatus.Pending, Name = Domain.Enums.OrderStatus.Pending.GetDescription() },
-                        new OrderStatus { Id = (int)Domain.Enums.OrderStatus.Completed, Name = Domain.Enums.OrderStatus.Completed.GetDescription() },
-                        new OrderStatus { Id = (int)Domain.Enums.OrderStatus.Refunded, Name = Domain.Enums.OrderStatus.Refunded.GetDescription() },
-                        new OrderStatus { Id = (int)Domain.Enums.OrderStatus.Cancelled, Name = Domain.Enums.OrderStatus.Cancelled.GetDescription() });
+        builder.HasData(new OrderStatus { Id = Domain.Enums.OrderStatus.Pending, Name = Domain.Enums.OrderStatus.Pending.GetDescription() },
+                        new OrderStatus { Id = Domain.Enums.OrderStatus.Completed, Name = Domain.Enums.OrderStatus.Completed.GetDescription() },
+                        new OrderStatus { Id = Domain.Enums.OrderStatus.Refunded, Name = Domain.Enums.OrderStatus.Refunded.GetDescription() },
+                        new OrderStatus { Id = Domain.Enums.OrderStatus.Cancelled, Name = Domain.Enums.OrderStatus.Cancelled.GetDescription() });
     }
 }

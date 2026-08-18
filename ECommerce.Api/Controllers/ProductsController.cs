@@ -29,7 +29,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ProductDetailsDto>> GetPaged(GetPagedProductsQuery query)
+    public async Task<ActionResult<ProductDetailsDto>> GetPaged([FromQuery] GetPagedProductsQuery query)
     {
         var products = await _sender.Send(query);
         return Ok(products);

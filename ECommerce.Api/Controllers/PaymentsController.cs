@@ -29,7 +29,7 @@ public class PaymentsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PaymentDto>> GetPaged(GetPagedPaymentsQuery query)
+    public async Task<ActionResult<PaymentDto>> GetPaged([FromQuery] GetPagedPaymentsQuery query)
     {
         var payments = await _sender.Send(query);
         return Ok(payments);

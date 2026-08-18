@@ -21,7 +21,7 @@ public class ProductRepository : IProductRepository
     public async Task<Product> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
         return await _context.Products
-            .AsNoTracking()
+            //.AsNoTracking()
             .Include(x=>x.Category)
                 .ThenInclude(x=>x.ParentCategory)
             .Include(x=>x.Currency)

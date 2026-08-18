@@ -3,6 +3,7 @@ using ECommerce.Application.UseCases.Customers.Commands.Create;
 using ECommerce.Application.UseCases.Customers.Commands.Delete;
 using ECommerce.Application.UseCases.Customers.Commands.Update;
 using ECommerce.Application.UseCases.Customers.Queries.GetById;
+using ECommerce.Application.UseCases.Customers.Queries.GetPaged;
 using ECommerce.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,9 +28,9 @@ public class CustomersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PagedResult<CustomerDetailsDto>>> GetPaged(int id)
+    public async Task<ActionResult<PagedResult<CustomerDetailsDto>>> GetPaged([FromQuery] GetPagedCustomersQuery query)
     {
-        var customer = await _sender.Send(new GetCustomerByIdQuery { Id = id });
+        var customer = await _sender.Send(query);
         return Ok(customer);
     }
 

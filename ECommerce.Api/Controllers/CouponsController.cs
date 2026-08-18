@@ -29,7 +29,7 @@ public class CouponsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<PagedResult<CouponDto>>> GetPaged(GetPagedCouponsQuery query)
+    public async Task<ActionResult<PagedResult<CouponDto>>> GetPaged([FromQuery] GetPagedCouponsQuery query)
     {
         var coupons = await _sender.Send(query);
         return Ok(coupons);

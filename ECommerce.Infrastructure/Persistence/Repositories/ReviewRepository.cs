@@ -47,7 +47,7 @@ namespace ECommerce.Infrastructure.Persistence.Repositories
                 .Where(x => x.ProductId == productId)
                 .ToListAsync(cancellationToken);
         }
-        public async Task<Review?> GetByCustomerAndProductAsync(int customerId, int productId, CancellationToken cancellationToken = default)
+        public async Task<Review> GetByCustomerAndProductAsync(int customerId, int productId, CancellationToken cancellationToken = default)
         {
             return await _context.Reviews
                 .AsNoTracking()

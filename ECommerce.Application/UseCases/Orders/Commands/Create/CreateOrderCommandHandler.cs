@@ -1,4 +1,5 @@
-﻿using ECommerce.Application.Interfaces;
+﻿using ECommerce.Application.Exceptions;
+using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Entities;
 using MediatR;
 
@@ -21,12 +22,12 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
 
     public async Task<int> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        CouponCustomer? customerCoupon = null;
+        CouponCustomer customerCoupon = null;
         if (!string.IsNullOrWhiteSpace(request.CouponCode))
         {
             customerCoupon = await _customerRepository.GetCustomerCouponAsync(request.CustomerId, request.CouponCode, cancellationToken);
             if (customerCoupon == null || !customerCoupon.IsValid)
-                throw new Exception("Coupon is not valid");
+                throw new CustomException("Coupon is not valid");
         }
 
         var productIds = request.Items.Select(x => x.ProductId).Distinct();
@@ -36,7 +37,7 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
         {
             var product = await _productRepository.GetByIdAsync(id, cancellationToken);
             if (product == null)
-                throw new Exception($"Product with id {id} was not found");
+                throw new CustomException($"Product with id {id} was not found");
 
             productDict[id] = product;
         }

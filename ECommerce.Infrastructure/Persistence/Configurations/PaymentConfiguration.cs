@@ -40,10 +40,11 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
             .HasDefaultValueSql("now()")
             .IsRequired();
 
-        builder.HasOne(x => x.Order)
-            .WithMany()
-            .HasForeignKey(x => x.OrderId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(p => p.Order)
+            .WithMany(o => o.Payments)
+            .HasForeignKey(p => p.OrderId)
+            .OnDelete(DeleteBehavior.Restrict)
+            .HasConstraintName("fk_aram_payments_orders");
 
         builder.HasOne(x => x.PaymentMethod)
             .WithMany()
