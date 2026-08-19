@@ -4,10 +4,10 @@ namespace ECommerce.Application.UseCases.Products.Commands.Update;
 
 public sealed record UpdateProductCommand:IRequest
 {
-    public int Id {  get; set; }
-    public Domain.Enums.ProductCategory CategoryId { get; set; }
-    public Domain.Enums.Currency CurrencyId { get; set; }
-    public string Name { get; set; }
-    public decimal Price { get; set; }
-    public int Quantity { get; set; }
+    public int Id {  get; init; }
+    public Domain.Enums.ProductCategory CategoryId { get; init; }
+    public Domain.Enums.Currency CurrencyId { get; init; }
+    public string Name { get; init; }
+    public decimal Price { get; init; }
+    public int Quantity { get; init; }
 }

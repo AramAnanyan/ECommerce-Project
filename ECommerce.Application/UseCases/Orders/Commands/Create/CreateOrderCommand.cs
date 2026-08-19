@@ -5,9 +5,9 @@ namespace ECommerce.Application.UseCases.Orders.Commands.Create;
 
 public record CreateOrderCommand : IRequest<int>
 {
-    public int CustomerId {  get; set; }
-    public int AddressId {  get; set; }
-    public Domain.Enums.OrderStatus StatusId {  get; set; }
-    public string CouponCode {  get; set; }
-    public List<RequestOrderItemDto> Items {  get; set; }
+    public int CustomerId {  get; init; }
+    public int AddressId {  get; init; }
+    public Domain.Enums.OrderStatus StatusId {  get; init; }
+    public string CouponCode {  get; init; }
+    public List<RequestOrderItemDto> Items {  get; init; }
 }

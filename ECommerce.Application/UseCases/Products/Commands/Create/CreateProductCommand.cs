@@ -4,9 +4,9 @@ namespace ECommerce.Application.UseCases.Products.Commands.Create;
 
 public sealed record CreateProductCommand:IRequest
 {
-    public Domain.Enums.ProductCategory CategoryId { get; set; }
-    public Domain.Enums.Currency CurrencyId { get; set; }
-    public string Name { get; set; }
-    public decimal Price { get; set; }
-    public int Quantity { get; set; }
+    public Domain.Enums.ProductCategory CategoryId { get; init; }
+    public Domain.Enums.Currency CurrencyId { get; init; }
+    public string Name { get; init; }
+    public decimal Price { get; init; }
+    public int Quantity { get; init; }
 }

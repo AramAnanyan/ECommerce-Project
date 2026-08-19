@@ -5,9 +5,9 @@ namespace ECommerce.Application.UseCases.Orders.Commands.Update;
 
 public sealed record UpdateOrderCommand:IRequest
 {
-    public int Id { get; set; }
-    public Domain.Enums.OrderStatus StatusId { get; set; }
-    public int AddressId { get; set; }
-    public string CouponCode {  get; set; }
-    public List<RequestOrderItemDto> Items { get; set; }
+    public int Id { get; init; }
+    public Domain.Enums.OrderStatus StatusId { get; init; }
+    public int AddressId { get; init; }
+    public string CouponCode {  get; init; }
+    public List<RequestOrderItemDto> Items { get; init; }
 }
