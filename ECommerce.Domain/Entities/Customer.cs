@@ -1,6 +1,9 @@
-﻿namespace ECommerce.Domain.Entities
+﻿using ECommerce.Domain.Common;
+using ECommerce.Domain.Events;
+
+namespace ECommerce.Domain.Entities
 {
-    public class Customer
+    public class Customer:Entity
     {
         public int Id { get; set; }
         public string FullName { get; set; } = string.Empty;
@@ -15,13 +18,15 @@
 
         public static Customer Create(string fullName, string emailAdress, string phoneNumber)
         {
-            return new Customer
+            var customer = new Customer
             {
                 FullName = fullName,
                 EmailAddress = emailAdress,
                 PhoneNumber = phoneNumber,
                 CreatedAt = DateTime.UtcNow
             };
+            customer.RaiseDomainEvent(new CustomerCreatedEvent { CustomerEmail = emailAdress });
+            return customer;
         }
 
         public void Update(string fullName, string emailAddress, string phoneNumber)

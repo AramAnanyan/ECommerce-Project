@@ -2,6 +2,7 @@
 using ECommerce.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1;
 using System;
 using System.Reflection;
 using System.Text.Json;
@@ -35,33 +36,35 @@ namespace ECommerce.Infrastructure.Persistence
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<OrderItem> OrderItems => Set<OrderItem>();
         public DbSet<Payment> Payments => Set<Payment>();
-
+        public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            // 1. Grab events BEFORE saving to DB
-            var entities = ChangeTracker.Entries<Entity>()
+            var domainEvents = ChangeTracker.Entries()
                 .Select(entry => entry.Entity)
-                .Where(entity => entity.DomainEvents.Any())
+                .OfType<Entity>()
+                .Where(entity => entity.DomainEvents != null && entity.DomainEvents.Any())
+                .SelectMany(entity =>
+                {
+                    var events = entity.DomainEvents.ToList();
+                    entity.ClearDomainEvents();
+                    return events;
+                })
                 .ToList();
 
-            var domainEvents = entities.SelectMany(e => e.DomainEvents).ToList();
-
-            // 2. Clear events from entities
-            foreach (var entity in entities)
+            var outboxMessages = domainEvents.Select(domainEvent => new OutboxMessage
             {
-                entity.ClearDomainEvents();
+                Id = Guid.NewGuid(),
+                Type = domainEvent.GetType().AssemblyQualifiedName!,
+                Content = JsonSerializer.Serialize(domainEvent, domainEvent.GetType()),
+                OccurredOnUtc = DateTime.UtcNow
+            }).ToList();
+
+            if (outboxMessages.Any())
+            {
+                await OutboxMessages.AddRangeAsync(outboxMessages, cancellationToken);
             }
 
-            // 3. Save entity changes to PostgreSQL
-            var result = await base.SaveChangesAsync(cancellationToken);
-
-            // 4. Publish events to MediatR handlers AFTER saving
-            foreach (var domainEvent in domainEvents)
-            {
-                await _publisher.Publish(domainEvent, cancellationToken);
-            }
-
-            return result;
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

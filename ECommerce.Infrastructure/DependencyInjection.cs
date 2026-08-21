@@ -1,4 +1,5 @@
 ﻿using ECommerce.Application.Interfaces;
+using ECommerce.Infrastructure.BackgroundJobs;
 using ECommerce.Infrastructure.Persistence;
 using ECommerce.Infrastructure.Persistence.Repositories;
 using ECommerce.Infrastructure.Persistence.Services;
@@ -19,6 +20,8 @@ public static class DependencyInjection
                 configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
             ));
+
+        services.AddHostedService<OutboxProcessorJob>();
 
         services.AddScoped<IReviewRepository, ReviewRepository>();
         services.AddScoped<ICouponRepository, CouponRepository>();
