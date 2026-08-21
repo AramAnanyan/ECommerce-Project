@@ -68,8 +68,9 @@ internal sealed class CreateOrderCommandHandler : IRequestHandler<CreateOrderCom
         {
             customerCoupon.Uses += 1;
         }
-
+        var customer = await _customerRepository.GetByIdAsync(request.CustomerId,false,cancellationToken);
         var order = Order.Create(
+            customer.EmailAddress,
             request.StatusId,
             request.CustomerId,
             request.AddressId,

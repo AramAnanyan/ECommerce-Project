@@ -1,15 +1,21 @@
-﻿using ECommerce.Domain.Entities;
+﻿using ECommerce.Domain.Common;
+using ECommerce.Domain.Entities;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
+using System.Text.Json;
 
 namespace ECommerce.Infrastructure.Persistence
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        private readonly IPublisher _publisher;
+        public AppDbContext(DbContextOptions<AppDbContext> options, IPublisher publisher) : base(options)
         {
+            _publisher = publisher;
         }
+
 
         public DbSet<Country> Countries => Set<Country>();
         public DbSet<Currency> Currencies => Set<Currency>();
@@ -29,6 +35,34 @@ namespace ECommerce.Infrastructure.Persistence
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<OrderItem> OrderItems => Set<OrderItem>();
         public DbSet<Payment> Payments => Set<Payment>();
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            // 1. Grab events BEFORE saving to DB
+            var entities = ChangeTracker.Entries<Entity>()
+                .Select(entry => entry.Entity)
+                .Where(entity => entity.DomainEvents.Any())
+                .ToList();
+
+            var domainEvents = entities.SelectMany(e => e.DomainEvents).ToList();
+
+            // 2. Clear events from entities
+            foreach (var entity in entities)
+            {
+                entity.ClearDomainEvents();
+            }
+
+            // 3. Save entity changes to PostgreSQL
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            // 4. Publish events to MediatR handlers AFTER saving
+            foreach (var domainEvent in domainEvents)
+            {
+                await _publisher.Publish(domainEvent, cancellationToken);
+            }
+
+            return result;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

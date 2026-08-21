@@ -1,6 +1,9 @@
-﻿namespace ECommerce.Domain.Entities;
+﻿using ECommerce.Domain.Common;
+using ECommerce.Domain.Events;
 
-public class Order
+namespace ECommerce.Domain.Entities;
+
+public class Order:Entity
 {
     public int Id { get; set; }
     public DateTime CreatedAt { get; set; }
@@ -15,12 +18,13 @@ public class Order
     public ICollection<Payment> Payments { get; set; } = [];
 
     public static Order Create(
+        string email,
         Enums.OrderStatus statusId,
         int customerId,
         int addressId,
         List<OrderItem> items)
     {
-        return new Order
+        var order = new Order
         {
             StatusId = statusId,
             CustomerId = customerId,
@@ -28,6 +32,8 @@ public class Order
             CreatedAt = DateTime.UtcNow,
             OrderItems = items
         };
+        order.RaiseDomainEvent(new OrderCreatedEvent { CustomerEmail = email });
+        return order;
     }
 
     public void Update(Enums.OrderStatus statusId ,int addressId, List<OrderItem> items)
